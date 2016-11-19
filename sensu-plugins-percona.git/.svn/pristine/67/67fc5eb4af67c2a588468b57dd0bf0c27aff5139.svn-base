@@ -1,0 +1,33 @@
+language: ruby
+cache:
+- bundler
+install:
+- bundle install
+rvm:
+- 2.0
+- 2.1
+- 2.2
+- 2.3.0
+notifications:
+  email:
+    recipients:
+    - sensu-plugin@sensu-plugins.io
+    on_success: change
+    on_failure: always
+script:
+- bundle exec rake default
+- gem build sensu-plugins-percona.gemspec
+- gem install sensu-plugins-percona-*.gem
+deploy:
+  provider: rubygems
+  api_key:
+    secure: B5Q6RCwDLexIBKW5UZQ8pGeIiq9zVtourg2qf2UbgeUgDRhyZGNf0s/XE8aBh5ZNqFAJQRl0KzDV4XHjcQqD31up8+MiEy3cqTP+Hxn6w2aHbqjwccrIzCk+jQus5nk+alkUAwLeGJkI8IFSeLfBtRpabigqQN0jdMo0NCPg5kM=
+  gem: sensu-plugins-percona
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.0
+    rvm: 2.1
+    rvm: 2.2
+    rvm: 2.3.0
+    repo: sensu-plugins/sensu-plugins-percona
